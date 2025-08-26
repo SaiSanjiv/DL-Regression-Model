@@ -40,32 +40,70 @@ Use the trained model to predict  for a new input value .
 
 ## PROGRAM
 
-### Name:
+### Name: Sai Sanjiv R
 
-### Register Number:
+### Register Number: 212223230179
 
 ```python
 class Model(nn.Module):
-    def __init__(self, in_features, out_features):
+      def __init__(self, in_features, out_features):
         super().__init__()
-        #Include your code here
+        self.linear = nn.Linear(in_features,out_features)
 
-
-
-# Initialize the Model, Loss Function, and Optimizer
-
+    def forward(self, x):
+        return self.linear(x)
 ```
+# Initialize the Model, Loss Function, and Optimizer
+```
+torch.manual_seed(59)  # Ensure same initial weights
+model = Model(1, 1)
+initial_weight = model.linear.weight.item()
+initial_bias = model.linear.bias.item()
+print("\nName: Sai Sanjiv R")
+print("Register No: 212223230179")
+print(f'Initial Weight: {initial_weight:.8f}, Initial Bias: {initial_bias:.8f}\n')
+```
+# Define Loss Function & Optimizer
+```
+loss_function = nn.MSELoss()
+optimizer = torch.optim.SGD(model.parameters(),lr=0.001)
+```
+# Train the Model
+```
+epochs = 50
+losses = []
+for epoch in range(1, epochs + 1):  # Loop over epochs
+    y_pred = model(X)
+    loss = loss_function(y_pred,y)
+    losses.append(loss.item())
 
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    if epoch % 100 == 0:
+      print(f'epoch: {epoch:2}  loss: {loss.item():10.8f}  '
+          f'weight: {model.linear.weight.item():10.8f}  '
+          f'bias: {model.linear.bias.item():10.8f}')
+```
 ### Dataset Information
-Include screenshot of the generated data
+<img width="487" height="176" alt="image" src="https://github.com/user-attachments/assets/7daaf5f3-a71d-484b-bf38-e97391c6eca8" />
+<img width="812" height="151" alt="image" src="https://github.com/user-attachments/assets/05760cbb-3630-4b0b-b3b3-72a78af17bc5" />
+<img width="712" height="565" alt="image" src="https://github.com/user-attachments/assets/8a88a98a-7896-4593-92ee-d4da68f0d3ac" />
+
 
 ### OUTPUT
-Training Loss Vs Iteration Plot
-Best Fit line plot
-Include your plot here
+#### Training Loss Vs Iteration Plot
+<img width="580" height="455" alt="download" src="https://github.com/user-attachments/assets/6839c997-292f-4a02-a1b7-df9e6e81f350" />
+
+#### Best Fit line plot
+
+<img width="711" height="565" alt="image" src="https://github.com/user-attachments/assets/01851a5d-e9cf-4bf7-bac5-4adf5a152ec1" />
+
 
 ### New Sample Data Prediction
-Include your sample input and output here
+<img width="805" height="257" alt="image" src="https://github.com/user-attachments/assets/1e9c818b-c44d-4c9f-8fc1-9d85cb57adb5" />
+
 
 ## RESULT
 Thus, a neural network regression model was successfully developed and trained using PyTorch.
